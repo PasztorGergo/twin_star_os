@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EnginEar | Proto_OS</title>
+    <title>Astro | Twin Star OS</title>
     <link rel="stylesheet" href="{{url_for('static', filename='/styles/output.css')}}" />
     <link
       rel="shortcut icon"
-      href="{{url_for('static', filename='assets/EnginEar_Logo.svg')}}"
+      href="{{url_for('static', filename='assets/Astro_Logo.svg')}}"
       type="image/x-icon"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,15 +38,15 @@
           {% if title == "controls"%}
             <li class="md:pl-8 pl-4 pr-4 py-2 rounded-sm border bg-yellow-500 bg-opacity-80 border-primary-lighter border-opacity-25"><a href="/">Control panel</a></li>
             <li class="md:pl-8 pl-4 pr-4 py-2 rounded-sm border border-primary-lighter border-opacity-25"><a href="/scans">HK-ReSe-024 type Protogen</a></li>
-            <li class="md:pl-8 pl-4 pr-4 py-2 rounded-sm border border-primary-lighter border-opacity-25"><a href="/status">Astro's status</a></li>
+            <li class="md:pl-8 pl-4 pr-4 py-2 rounded-sm border border-primary-lighter border-opacity-25"><a href="/status">EnginEar's status</a></li>
           {% elif title == "scans" %}
             <li class="md:pl-8 pl-4 pr-4 py-2 rounded-sm border border-primary-lighter border-opacity-25"><a href="/">Control panel</a></li>
             <li class="md:pl-8 pl-4 pr-4 py-2 rounded-sm border bg-yellow-500 bg-opacity-80 border-primary-lighter border-opacity-25"><a href="/scans">HK-ReSe-024 type Protogen</a></li>
-            <li class="md:pl-8 pl-4 pr-4 py-2 rounded-sm border border-primary-lighter border-opacity-25"><a href="/status">Astro's status</a></li>
+            <li class="md:pl-8 pl-4 pr-4 py-2 rounded-sm border border-primary-lighter border-opacity-25"><a href="/status">EnginEar's status</a></li>
           {% else %}
             <li class="md:pl-8 pl-4 pr-4 py-2 rounded-sm border border-primary-lighter border-opacity-25"><a href="/">Control panel</a></li>
             <li class="md:pl-8 pl-4 pr-4 py-2 rounded-sm border border-primary-lighter border-opacity-25"><a href="/scans">Control panel</a></li>
-            <li class="md:pl-8 pl-4 pr-4 py-2 rounded-sm border bg-yellow-500 bg-opacity-80 border-primary-lighter border-opacity-25"><a href="/status">Astro's status</a></li>
+            <li class="md:pl-8 pl-4 pr-4 py-2 rounded-sm border bg-yellow-500 bg-opacity-80 border-primary-lighter border-opacity-25"><a href="/status">EnginEar's status</a></li>
           {%endif%}
         </ul>
       </nav>
