@@ -2,21 +2,21 @@
 import serial
 import json
 
-astro = serial.Serial("/dev/rfcomm0",115200)
+enginear = serial.Serial("/dev/rfcomm0",115200)
 
 while(True):
-    astro_data = serial.readline().decode("ascii")
+    enginear_data = serial.readline().decode("ascii")
     enginear_db = None
     astro_db = None
     with open("db.txt") as fp:
-        enginear_db = fp.readline().replace("\n", "")
-        astro_db = fp.readline().replace("\n", "").split("\t")
+        enginear_db = fp.readline().replace("\n", "").split("\t")
+        astro_db = fp.readline().replace("\n", "")
 
-        status = json.loads(astro_data)
-        astro_db[0] = int(status["id"])
-        astro_db[1] = eval(status["eye"])
-        astro_db[2] = eval(status["lips"])
-        astro_db[3] = eval(status["rave"])
-        astro_db[4] = eval(status["patriotism"])
+        status = json.loads(enginear_data)
+        enginear_db[0] = int(status["id"])
+        enginear_db[1] = eval(status["eye"])
+        enginear_db[2] = eval(status["lips"])
+        enginear_db[3] = eval(status["rave"])
+        enginear_db[4] = eval(status["patriotism"])
     with open("db.txt", "w") as fp:
         fp.write(f"{enginear_db}\n{"\t".join(astro_db)}")

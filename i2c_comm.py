@@ -1,7 +1,7 @@
 from smbus2 import SMBus, i2c_msg
 import RPi.GPIO as GPIO
 
-TEENSY_ADDR = 0x3c
+ESP_ADDR = 0x3c
 DEVICE_BUS = 1
 
 def send_emotion(id):
