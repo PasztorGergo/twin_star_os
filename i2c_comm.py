@@ -1,5 +1,4 @@
 from smbus2 import SMBus, i2c_msg
-import RPi.GPIO as GPIO
 
 ESP_ADDR = 0x3c
 DEVICE_BUS = 1
