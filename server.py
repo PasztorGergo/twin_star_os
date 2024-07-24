@@ -1,6 +1,7 @@
 from flask import Flask, request,render_template
 from fan_control import set_fan_speed
 from i2c_comm import send_emotion, send_blink, send_feature
+from bluetooth_functions import update_to_enginear, req_to_enginear
 
 app = Flask(__name__)
 emotion = 0
@@ -18,12 +19,17 @@ def write_change():
     global eye
     global mouth
 
+    enginear_db = "-1"
+    with open("db.txt") as fp:
+        enginear_db = fp.readline().replace("\n", "")
+
     with open("db.txt", "w") as fp:
-        fp.write(f"{emotion}\t{rave}\t{hu}\t{eye}\t{mouth}\t{speed}")
+        fp.write(f"{enginear_db}\n{emotion}\t{rave}\t{hu}\t{eye}\t{mouth}\t{speed}")
 
 @app.route("/")
 def index():
     with open("db.txt") as fp:
+        enginear_db = fp.readline()
         spltied = fp.readline().replace("\n", "").split("\t")
         return render_template("index.html", 
         title="controls", 
@@ -39,6 +45,7 @@ def scan_data():
 
 @app.route("/status")
 def status_data():
+    req_to_enginear()
     return render_template("status.html", title="status")
 
 @app.route("/static-emotion", methods=["POST"])
@@ -50,6 +57,7 @@ def setEmtoion():
             send_emotion(id)
             rave = False
             write_change()
+            update_to_enginear()
             return {"id": id}
         except:
             return {"id": id}, 500
@@ -67,6 +75,7 @@ def toggleRaveMode():
         send_feature(eval(rave), 0b10)
         print("Rave mode toggled")
         write_change()
+        update_to_enginear()
         return {"state": eval(rave)}
     except:
         return {"state": eval(rave)}, 500
@@ -78,6 +87,7 @@ def setPatroitism():
         hu = request.get_json()["state"]
         send_feature(eval(hu), 0b11)
         write_change()
+        update_to_enginear()
         print("Patroitism toggled")
         return {"state": eval(hu)}
     except:
@@ -88,8 +98,9 @@ def toggleEyeTracking():
     global eye
     try:
         eye = request.get_json()["state"]
-        write_change()
         send_feature(eval(eye), 0b00)
+        write_change()
+        update_to_enginear()
         return {"state": eval(eye)}
     except:
         return {"state": eval(eye)}, 500
@@ -101,6 +112,7 @@ def toggleMouthSynch():
         mouth = request.get_json()["state"]
         send_feature(eval(mouth), 0b01)
         write_change()
+        update_to_enginear()
         return {"state": eval(mouth)}
     except:
         return {"state": eval(mouth)}, 500
@@ -111,6 +123,7 @@ def setFanSpeed():
     try:
         speed = int(request.get_json()["speed"])
         #set_fan_speed(speed)
+        update_to_enginear()
         return {"speed": speed}
     except:
         return {"speed": speed}, 500
@@ -120,5 +133,9 @@ if __name__ == "__main__":
     try:
         app.run(host="0.0.0.0", port=3000, debug=True)
     except:
+        enginear_db = "-1"
+        with open("db.txt") as fp:
+            enginear_db = fp.readline().replace("\n", "")
+
         with open("db.txt", "w") as fp:
-            fp.write(default_db_values)
+            fp.write(f"{enginear_db}\n{emotion}\t{rave}\t{hu}\t{eye}\t{mouth}\t{speed}")
