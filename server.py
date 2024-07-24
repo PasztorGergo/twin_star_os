@@ -1,5 +1,5 @@
 from flask import Flask, request,render_template
-from fan_control import set_fan_speed
+#from fan_control import set_fan_speed
 from i2c_comm import send_emotion, send_blink, send_feature
 from bluetooth_functions import update_to_enginear, req_to_enginear
 
@@ -18,10 +18,12 @@ def write_change():
     global hu
     global eye
     global mouth
+    global speed
 
-    enginear_db = "-1"
+    enginear_db = None
     with open("db.txt") as fp:
-        enginear_db = fp.readline().replace("\n", "")
+            first_line = fp.readline().replace("\n", "")
+            enginear_db = "-1" if len(first_line) == 0 else first_line
 
     with open("db.txt", "w") as fp:
         fp.write(f"{enginear_db}\n{emotion}\t{rave}\t{hu}\t{eye}\t{mouth}\t{speed}")
@@ -133,9 +135,10 @@ if __name__ == "__main__":
     try:
         app.run(host="0.0.0.0", port=3000, debug=True)
     except:
-        enginear_db = "-1"
+        enginear_db = None
         with open("db.txt") as fp:
-            enginear_db = fp.readline().replace("\n", "")
+            first_line = fp.readline().replace("\n", "")
+            enginear_db = "-1" if len(first_line) == 0 else first_line
 
         with open("db.txt", "w") as fp:
             fp.write(f"{enginear_db}\n{emotion}\t{rave}\t{hu}\t{eye}\t{mouth}\t{speed}")
