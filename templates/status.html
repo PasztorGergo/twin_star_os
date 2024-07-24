@@ -86,7 +86,7 @@
           <li
             class="md:pl-8 pl-4 pr-4 py-2 rounded-sm border border-primary-lighter border-opacity-25"
           >
-            <a href="/status">Astro's status</a>
+            <a href="/status">EnginEar's status</a>
           </li>
           {% elif title == "scans" %}
           <li
@@ -102,7 +102,7 @@
           <li
             class="md:pl-8 pl-4 pr-4 py-2 rounded-sm border border-primary-lighter border-opacity-25"
           >
-            <a href="/status">Astro's status</a>
+            <a href="/status">EnginEar's status</a>
           </li>
           {% else %}
           <li
@@ -118,7 +118,7 @@
           <li
             class="md:pl-8 pl-4 pr-4 py-2 rounded-sm border bg-yellow-500 bg-opacity-80 border-primary-lighter border-opacity-25"
           >
-            <a href="/status">Astro's status</a>
+            <a href="/status">EnginEar's status</a>
           </li>
           {%endif%}
         </ul>
@@ -132,7 +132,7 @@
         <ul
           class="max-h-80 glow-text flex md:flex-col md:flex-nowrap flex-wrap md:items-center gap-8 w-full overflow-y-scroll"
         >
-          <li class="emotion md:w-auto w-16" onclick="setEmotion(0)">
+          <li class="emotion md:w-auto w-16">
             <img
               src="{{url_for('static', filename='/assets/Default.png')}}"
               title="Default"
@@ -140,7 +140,7 @@
               class="w-full h-full"
             />
           </li>
-          <li class="emotion md:w-auto w-16" onclick="setEmotion(1)">
+          <li class="emotion md:w-auto w-16">
             <img
               src="{{url_for('static', filename='/assets/Happy.png')}}"
               title="Happy"
@@ -148,7 +148,7 @@
               class="w-full h-full"
             />
           </li>
-          <li class="emotion md:w-auto w-16" onclick="setEmotion(2)">
+          <li class="emotion md:w-auto w-16">
             <img
               src="{{url_for('static', filename='/assets/Tired.png')}}"
               title="Tired"
@@ -156,7 +156,7 @@
               class="w-full h-full"
             />
           </li>
-          <li class="emotion md:w-auto w-16" onclick="setEmotion(3)">
+          <li class="emotion md:w-auto w-16">
             <img
               src="{{url_for('static', filename='/assets/Eyes-closed.png')}}"
               title="Eyes-closed"
@@ -164,7 +164,7 @@
               class="w-full h-full"
             />
           </li>
-          <li class="emotion md:w-auto w-16" onclick="setEmotion(4)">
+          <li class="emotion md:w-auto w-16">
             <img
               src="{{url_for('static', filename='/assets/Angry.png')}}"
               title="Angry"
@@ -172,7 +172,7 @@
               class="w-full h-full"
             />
           </li>
-          <li class="emotion md:w-auto w-16" onclick="setEmotion(5)">
+          <li class="emotion md:w-auto w-16">
             <img
               src="{{url_for('static', filename='/assets/Furious.png')}}"
               title="Furious"
@@ -180,7 +180,7 @@
               class="w-full h-full"
             />
           </li>
-          <li class="emotion md:w-auto w-16" onclick="setEmotion(6)">
+          <li class="emotion md:w-auto w-16">
             <img
               src="{{url_for('static', filename='/assets/Sad.png')}}"
               title="Sad"
@@ -188,7 +188,7 @@
               class="w-full h-full"
             />
           </li>
-          <li class="emotion md:w-auto w-16" onclick="setEmotion(7)">
+          <li class="emotion md:w-auto w-16">
             <img
               src="{{url_for('static', filename='/assets/Inquestitive.png')}}"
               title="Inquestitive"
@@ -196,7 +196,7 @@
               class="w-full h-full"
             />
           </li>
-          <li class="emotion md:w-auto w-16" onclick="setEmotion(8)">
+          <li class="emotion md:w-auto w-16">
             <img
               src="{{url_for('static', filename='/assets/Confused.png')}}"
               title="Confused"
@@ -204,7 +204,7 @@
               class="w-full h-full"
             />
           </li>
-          <li class="emotion md:w-auto w-16" onclick="setEmotion(9)">
+          <li class="emotion md:w-auto w-16">
             <img
               src="{{url_for('static', filename='/assets/Love.png')}}"
               title="Love"
@@ -229,7 +229,6 @@
           <ul class="text-primary-light mt-4 flex flex-col gap-4">
             <li class="flex items-center gap-4">
               <button
-                onclick="toggleEyeTracking()"
                 class="transition-all duration-500 rounded-full p-2 w-12 h-12 aspect-square"
                 id="eye-btn"
               ></button>
@@ -237,7 +236,6 @@
             </li>
             <li class="flex items-center gap-4">
               <button
-                onclick="toggleMouthTracking()"
                 class="transition-all duration-500 rounded-full p-2 w-12 h-12 aspect-square"
                 id="mouth-btn"
               ></button>
@@ -265,7 +263,6 @@
           <ul class="text-primary-light mt-4 flex flex-col gap-4">
             <li class="flex items-center gap-4">
               <button
-                onclick="toggleRaveMode()"
                 class="transition-all duration-500 rounded-full p-2 w-12 h-12 aspect-square"
                 id="rave-btn"
               ></button>
@@ -273,7 +270,6 @@
             </li>
             <li class="flex items-center gap-4">
               <button
-                onclick="togglePatroitismMode()"
                 class="transition-all duration-500 rounded-full p-2 w-12 h-12 aspect-square"
                 id="hungary"
               >
@@ -288,6 +284,40 @@
     <footer class="grid place-items-center pt-4">
       <p class="text-primary-lighter">2024 ©️</p>
     </footer>
-    <script></script>
+    <script>
+      const raveState = {{ rave_mode | tojson }};
+      const patriotismState = {{ patriotism | tojson }};
+      const trackEye = {{ eye | tojson}};
+      const mouthSynch = {{ mouth | tojson}};
+      const id = {{ emotion | tojson}};
+
+      const raveBtn = document.getElementById("rave-btn");
+      const hungary = document.getElementById("hungary");
+      const eyeBtn = document.getElementById("eye-btn");
+      const mouthBtn = document.getElementById("mouth-btn");
+
+      if(raveBtn && hungary && eyeBtn && mouthBtn){
+        raveBtn.classList.add(raveState ? "on" : "off")
+        hungary.classList.add(patriotismState ? "huon" : "huoff")
+        eyeBtn.classList.add(trackEye ? "on" : "off")
+        mouthBtn.classList.add(mouthSynch ? "on" : "off")
+
+        raveBtn.innerHTML = raveState ? "ON" : "OFF"
+        hungary.innerHTML = patriotismState ? "ON" : "OFF"
+        eyeBtn.innerHTML = trackEye ? "ON" : "OFF"
+        mouthBtn.innerHTML = mouthSynch ? "ON" : "OFF"
+      }
+
+      const emotions = document.querySelectorAll<HTMLLIElement>("li.emotion");
+      if(emotions.length > 0){
+        let i = 0;
+        emotions.forEach((emo)=>{
+          if(i == id)
+            emo.style.display = "inline-block"
+          else
+            emo.style.display = "none"
+        })
+      }
+    </script>
   </body>
 </html>

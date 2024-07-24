@@ -48,7 +48,18 @@ def scan_data():
 @app.route("/status")
 def status_data():
     req_to_enginear()
-    return render_template("status.html", title="status")
+    enginear_db = None
+    with open("db.txt") as fp:
+        enginear_db = fp.readline().replace("\n", "").split("\t")
+
+    return render_template("status.html",
+    title="status",
+    emotion=int(enginear_db[0]),
+    rave_mode=eval(enginear_db[1]),
+    patriotism=eval(enginear_db[2]),
+    eye=eval(enginear_db[3]),
+    mouth=eval(enginear_db[4])
+    )
 
 @app.route("/static-emotion", methods=["POST"])
 def setEmtoion():
