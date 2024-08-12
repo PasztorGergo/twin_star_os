@@ -2,6 +2,7 @@ from flask import Flask, request,render_template
 #from fan_control import set_fan_speed
 from i2c_comm import send_emotion, send_blink, send_feature
 from bluetooth_functions import update_to_enginear, req_to_enginear
+import time
 
 app = Flask(__name__)
 emotion = 0
@@ -11,6 +12,7 @@ eye = False
 mouth = False
 speed = 0
 default_db_values = f"{emotion}\t{rave}\t{hu}\t{eye}\t{mouth}\{speed}"
+failed_bluetooth = 0
 
 def write_change():
     global emotion
@@ -47,19 +49,25 @@ def scan_data():
 
 @app.route("/status")
 def status_data():
-    req_to_enginear()
-    enginear_db = None
-    with open("db.txt") as fp:
-        enginear_db = fp.readline().replace("\n", "").split("\t")
+    if failed_bluetooth < 3:
+        try:
+            req_to_enginear()
+            enginear_db = None
+            with open("db.txt") as fp:
+                enginear_db = fp.readline().replace("\n", "").split("\t")
 
-    return render_template("status.html",
-    title="status",
-    emotion=int(enginear_db[0]),
-    rave_mode=eval(enginear_db[1]),
-    patriotism=eval(enginear_db[2]),
-    eye=eval(enginear_db[3]),
-    mouth=eval(enginear_db[4])
+            return render_template("status.html",
+            title="status",
+            emotion=int(enginear_db[0]),
+            rave_mode=eval(enginear_db[1]),
+            patriotism=eval(enginear_db[2]),
+            eye=eval(enginear_db[3]),
+            mouth=eval(enginear_db[4])
     )
+        except:
+            failed_bluetooth += 1
+            time.sleep(5)
+            status_data()
 
 @app.route("/static-emotion", methods=["POST"])
 def setEmtoion():
