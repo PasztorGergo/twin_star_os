@@ -78,7 +78,7 @@ def setEmtoion():
             send_emotion(id)
             rave = False
             write_change()
-            update_to_enginear()
+            #update_to_enginear()
             return {"id": id}
         except:
             return {"id": id}, 500
@@ -96,7 +96,7 @@ def toggleRaveMode():
         send_feature(eval(rave), 0b10)
         print("Rave mode toggled")
         write_change()
-        update_to_enginear()
+        #update_to_enginear()
         return {"state": eval(rave)}
     except:
         return {"state": eval(rave)}, 500
@@ -108,7 +108,7 @@ def setPatroitism():
         hu = request.get_json()["state"]
         send_feature(eval(hu), 0b11)
         write_change()
-        update_to_enginear()
+        #update_to_enginear()
         print("Patroitism toggled")
         return {"state": eval(hu)}
     except:
@@ -121,7 +121,7 @@ def toggleEyeTracking():
         eye = request.get_json()["state"]
         send_feature(eval(eye), 0b00)
         write_change()
-        update_to_enginear()
+        #update_to_enginear()
         return {"state": eval(eye)}
     except:
         return {"state": eval(eye)}, 500
@@ -133,7 +133,7 @@ def toggleMouthSynch():
         mouth = request.get_json()["state"]
         send_feature(eval(mouth), 0b01)
         write_change()
-        update_to_enginear()
+        #update_to_enginear()
         return {"state": eval(mouth)}
     except:
         return {"state": eval(mouth)}, 500
@@ -144,7 +144,7 @@ def setFanSpeed():
     try:
         speed = int(request.get_json()["speed"])
         #set_fan_speed(speed)
-        update_to_enginear()
+        #update_to_enginear()
         return {"speed": speed}
     except:
         return {"speed": speed}, 500
